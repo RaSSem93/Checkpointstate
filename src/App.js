@@ -1,25 +1,37 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { Component } from 'react'
+import Tasklist from './Component/Tasklist';
+import Addtask from './addtask/Addtask';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+
+
+export default class App extends Component {
+
+
+  state= {
+    tasks:[
+      
+      ]
+  };
+
+  handleDelete=(taskID)=> {this.setState({tasks:this.state.tasks.filter ((el)=>el.id !== taskID)});}
+  handleComplete=(IDstar)=> {this.setState({tasks:this.state.tasks.map((el)=>el.id=== IDstar ? {...el, isDone : !el.isDone}:el)})}
+  handleAdd=(rassem)=>{const newTask={id:Math.random(), action : rassem , isDone : false}
+  this.setState({ tasks:[...this.state.tasks,newTask] });
+  }
+  
+  
+  
+  render() {
+    return (
+      <div className="app">
+        < Addtask  add={this.handleAdd}/>
+        <Tasklist   tab={this.state.tasks} del ={this.handleDelete} comp={this.handleComplete}/>
+
+      </div>
+    )
+  }
 }
 
-export default App;
+
